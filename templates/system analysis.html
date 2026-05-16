@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header mb-5">
+    <h1 class="page-title">Interactive Analysis Lab</h1>
+    <p class="page-subtitle">Experiment with physics and control. Adjust the sliders to see how air pressure, mass, and software controllers work together to move a piston.</p>
+</div>
+
+<div class="simulator-layout">
+    <!-- Control Panels Area -->
+    <div class="sidebar-controls">
+        <!-- Physical Parameters Card -->
+        <div class="control-card mb-4">
+            <h3 class="card-title h5 mb-4 d-flex align-items-center gap-2">
+                <i data-lucide="settings-2" class="text-primary"></i>
+                Physical System
+            </h3>
+            
+            <div class="param-group">
+                <div class="param-header">
+                    <span>Mass (M)</span>
+                    <span class="param-value"><span id="val-m">20</span>kg</span>
+                </div>
+                <input type="range" class="form-range" id="slider-m" min="1" max="100" value="20">
+            </div>
+
+            <div class="param-group">
+                <div class="param-header">
+                    <span>Damping (D)</span>
+                    <span class="param-value"><span id="val-d">60</span>Ns/m</span>
+                </div>
+                <input type="range" class="form-range" id="slider-d" min="0" max="200" value="60">
+            </div>
+
+            <div class="param-group">
+                <div class="param-header">
+                    <span>Spring (C)</span>
+                    <span class="param-value"><span id="val-c">100</span>N/m</span>
+                </div>
+                <input type="range" class="form-range" id="slider-c" min="0" max="500" value="100">
+            </div>
+
+            <div class="param-group">
+                <div class="param-header">
+                    <span>Air Pressure (P)</span>
+                    <span class="param-value"><span id="val-p">20684</span>Pa</span>
+                </div>
+                <input type="range" class="form-range" id="slider-p" min="1000" max="100000" value="20684" step="1000">
+            </div>
+        </div>
+
+        <!-- PID Controller Card -->
+        <div class="control-card border-primary border-top border-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="card-title h5 m-0 d-flex align-items-center gap-2">
+                    <i data-lucide="cpu" class="text-primary"></i>
+                    PID Controller
+                </h3>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="pid-enable">
+                </div>
+            </div>
+
+            <div id="pid-controls-area" class="d-none">
+                <div class="param-group">
+                    <div class="param-header">
+                        <span>Proportional (Kp)</span>
+                        <span class="param-value" id="val-kp">1,000,000</span>
+                    </div>
+                    <input type="range" class="form-range" id="slider-kp" min="0" max="5000000" step="50000" value="1000000">
+                </div>
+
+                <div class="param-group">
+                    <div class="param-header">
+                        <span>Integral (Ki)</span>
+                        <span class="param-value" id="val-ki">500,000</span>
+                    </div>
+                    <input type="range" class="form-range" id="slider-ki" min="0" max="2000000" step="10000" value="500000">
+                </div>
+
+                <div class="param-group">
+                    <div class="param-header">
+                        <span>Derivative (Kd)</span>
+                        <span class="param-value" id="val-kd">50,000</span>
+                    </div>
+                    <input type="range" class="form-range" id="slider-kd" min="0" max="500000" step="5000" value="50000">
+                </div>
+            </div>
+
+            <div class="p-3 rounded bg-light small text-muted">
+                <i data-lucide="lightbulb" size="14" class="text-warning"></i>
+                <strong>Tip:</strong> Toggle the switch to see how computer-controlled feedback (PID) can stop the piston exactly where you want it!
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Visualizer Area -->
+    <div class="visualizer-container">
+        <div class="info-card h-100 mb-0 shadow-lg">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h4 fw-bold m-0 d-flex align-items-center gap-2">
+                    <i data-lucide="activity" class="text-primary"></i>
+                    Live System Response
+                </h2>
+                <div class="badge bg-primary px-3 py-2 rounded-pill">Real-time Simulation</div>
+            </div>
+            
+            <div style="height: 450px;">
+                <canvas id="analysisChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Educational Section for Beginners -->
+<div class="row mt-5 pt-4">
+    <div class="col-12">
+        <h2 class="fw-bold mb-4 d-flex align-items-center gap-2">
+            <i data-lucide="book-open" class="text-primary"></i>
+            How It Works (For Everyone)
+        </h2>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="info-card edu-card h-100">
+            <div class="edu-icon"><i data-lucide="wind"></i></div>
+            <h4 class="fw-bold">1. The Push (Force)</h4>
+            <p class="text-muted small">Pneumatics is just using **compressed air** to push things. Higher **Pressure (P)** means a stronger push. But if the **Mass (M)** is heavy, it takes longer to start moving.</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="info-card edu-card h-100">
+            <div class="edu-icon"><i data-lucide="waves"></i></div>
+            <h4 class="fw-bold">2. The Resistance</h4>
+            <p class="text-muted small">**Damping (D)** is like moving your hand through water—it slows the piston down. **Spring (C)** is like a rubber band trying to pull the piston back to its home position.</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="info-card edu-card h-100">
+            <div class="edu-icon"><i data-lucide="brain"></i></div>
+            <h4 class="fw-bold">3. The Brain (PID)</h4>
+            <p class="text-muted small">Without PID, the piston just flies out based on air pressure. With **PID enabled**, a computer "watches" the position and adjusts the air flow to stop perfectly at the **Red Target Line**.</p>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/simulator.js') }}"></script>
+{% endblock %}

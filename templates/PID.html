@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">The Brain: PID Control</h1>
+    <p class="page-subtitle text-justify">Without control, a pneumatic system just pushes air blindly. A PID Controller acts like a brain, constantly checking where the piston is and adjusting the air to make it stop perfectly on target.</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Overview Card -->
+        <section id="pid_overview" class="info-card">
+            <h2 class="card-title"><i data-lucide="car"></i> The "Driving" Analogy</h2>
+            <p class="text-justify">The best way to understand PID is to imagine you are driving a car and trying to stay exactly in the center of your lane. The center line is your <strong>Target</strong>. Where your car is right now is your <strong>Current Position</strong>. The distance between them is the <strong>Error</strong>.</p>
+            
+            <div class="row mt-4 g-4">
+                <div class="col-md-4">
+                    <div class="p-4 border rounded text-center h-100 position-relative overflow-hidden" style="border-color: var(--primary) !important;">
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-10"></div>
+                        <i data-lucide="navigation" size="32" class="text-primary mb-3 position-relative"></i>
+                        <span class="d-block fw-bold text-primary position-relative">Proportional (P)</span>
+                        <span class="d-block small fw-bold text-muted mb-2 position-relative">"The Present"</span>
+                        <p class="small text-muted position-relative">If you are far away from the center line, you steer hard. If you are close, you steer gently. It reacts to your <strong>current</strong> mistake.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 border rounded text-center h-100 position-relative overflow-hidden" style="border-color: #10b981 !important;">
+                        <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" style="background-color: #10b981;"></div>
+                        <i data-lucide="wind" size="32" style="color: #10b981;" class="mb-3 position-relative"></i>
+                        <span class="d-block fw-bold position-relative" style="color: #10b981;">Integral (I)</span>
+                        <span class="d-block small fw-bold text-muted mb-2 position-relative">"The Past"</span>
+                        <p class="small text-muted position-relative">Imagine a strong crosswind is pushing you off the road. Even if you steer straight, you drift. The 'I' remembers this <strong>past</strong> drifting and holds the wheel slightly turned to fight the wind.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 border rounded text-center h-100 position-relative overflow-hidden" style="border-color: var(--accent) !important;">
+                        <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" style="background-color: var(--accent);"></div>
+                        <i data-lucide="eye" size="32" style="color: var(--accent);" class="mb-3 position-relative"></i>
+                        <span class="d-block fw-bold position-relative" style="color: var(--accent);">Derivative (D)</span>
+                        <span class="d-block small fw-bold text-muted mb-2 position-relative">"The Future"</span>
+                        <p class="small text-muted position-relative">If you are steering back towards the center line very fast, you will overshoot and cross into the other lane! The 'D' sees the <strong>future</strong> and slows down your steering before you cross the line.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center my-5">
+                <img src="{{ url_for('static', filename='Images/PID.png') }}" alt="PID Diagram" class="img-fluid img-fluid-custom rounded shadow-sm">
+                <p class="small text-muted mt-2">The classic feedback loop: Measure the error, think (PID), and adjust the pressure.</p>
+            </div>
+        </section>
+
+        <!-- Characteristics Table Card -->
+        <section id="characteristics" class="info-card">
+            <h2 class="card-title"><i data-lucide="table"></i> Tuning the Brain</h2>
+            <p class="text-justify mb-4">By adjusting how much P, I, and D we use (called "tuning"), we can make our pneumatic piston move perfectly. Here is what happens when you increase each one:</p>
+            
+            <div class="table-responsive">
+                <table class="table table-hover border align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>If you increase...</th>
+                            <th>Speed to Target</th>
+                            <th>Overshoot (Going too far)</th>
+                            <th>Stopping the Wind (Error)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Proportional (P)</strong></td>
+                            <td class="text-success"><i data-lucide="arrow-up" size="16"></i> Faster</td>
+                            <td class="text-danger"><i data-lucide="alert-circle" size="16"></i> Gets Worse</td>
+                            <td class="text-success">Helps a little</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Integral (I)</strong></td>
+                            <td class="text-success"><i data-lucide="arrow-up" size="16"></i> Faster</td>
+                            <td class="text-danger"><i data-lucide="alert-circle" size="16"></i> Gets Worse</td>
+                            <td class="text-success fw-bold"><i data-lucide="check-circle" size="16"></i> Fixes completely!</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Derivative (D)</strong></td>
+                            <td class="text-muted">No change</td>
+                            <td class="text-success fw-bold"><i data-lucide="shield-check" size="16"></i> Stops it completely!</td>
+                            <td class="text-muted">No change</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="small text-muted text-center mt-3">That's why we use all three together! They balance each other out.</p>
+        </section>
+
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Formulas Card -->
+        <div class="info-card sticky-top" style="top: 2rem;">
+            <h2 class="card-title"><i data-lucide="function-square"></i> For the Math Geeks</h2>
+            <p class="small text-muted">If you are curious about what the math looks like when you combine the Physical Recipe (from the Modeling page) with the PID Brain, here it is:</p>
+            <div class="math-block small overflow-hidden p-2 bg-light border rounded">
+                \[ T(s) = \frac{A(K_ds^2 + K_ps + K_i)}{Ms^3 + (D + K_d)s^2 + (C + K_p)s + K_i} \]
+            </div>
+            
+            <hr class="my-4">
+            
+            <h6 class="fw-bold d-flex align-items-center gap-2"><i data-lucide="target" class="text-primary"></i> The Goal of a Good Brain</h6>
+            <ul class="small text-muted ps-3 mt-2 space-y-2">
+                <li><strong>Be Fast:</strong> Reach the target line quickly.</li>
+                <li><strong>Be Accurate:</strong> Don't leave any permanent gap between the car and the line (Zero Error).</li>
+                <li><strong>Be Safe:</strong> Don't swerve wildly across the line (Minimize Overshoot).</li>
+            </ul>
+            
+            <div class="mt-4 pt-3 border-top">
+                <a href="/system/analysis" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                    <i data-lucide="play" size="18"></i>
+                    <span>Try tuning PID in the Lab</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

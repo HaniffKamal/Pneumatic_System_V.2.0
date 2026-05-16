@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row align-items-center mb-5" style="min-height: 40vh;">
+    <div class="col-lg-7">
+        <div class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill mb-3 fw-bold">Welcome to PneumaticLab!</div>
+        <h1 class="display-4 fw-bold mb-3" style="font-family: 'Outfit';">Control Air.<br><span class="text-primary">Master Machines.</span></h1>
+        <p class="lead text-muted mb-4">Ever wonder how factory robots move so smoothly? Or how heavy machinery lifts tons of weight with ease? The secret is <strong>Pneumatics</strong>—using invisible air to do heavy lifting.</p>
+        <p class="mb-4">You don't need an engineering degree to understand this. We've broken down the complex math into fun, interactive labs. Ready to see how it works?</p>
+        <div class="d-flex gap-3">
+            <a href="/system/modeling" class="btn btn-primary btn-lg px-4 fw-bold">Start Learning Here</a>
+            <a href="/system/analysis" class="btn btn-outline-secondary btn-lg px-4">Skip to Simulator</a>
+        </div>
+    </div>
+    <div class="col-lg-5 text-center mt-5 mt-lg-0">
+        <div class="position-relative">
+            <div class="position-absolute top-50 start-50 translate-middle w-100 h-100 bg-primary opacity-5 rounded-circle blur-3xl" style="filter: blur(60px); z-index: 0;"></div>
+            <div class="p-5 bg-white rounded-4 shadow-lg border border-light-subtle position-relative" style="z-index: 1;">
+                 <i data-lucide="wind" class="text-primary mb-3" size="72"></i>
+                 <div class="h4 fw-bold">What is a Pneumatic System?</div>
+                 <p class="text-muted mb-0">Think of a bicycle pump. When you push the handle, compressed air moves. Pneumatic systems use that exact same compressed air to act like an invisible, powerful muscle to push, pull, and lift things!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-5">
+    <div class="col-12 text-center mb-2">
+        <h2 class="fw-bold">Your Journey Starts Here</h2>
+        <p class="text-muted">Follow these three steps to become a control master.</p>
+    </div>
+    <div class="col-md-4">
+        <div class="info-card h-100 mb-0 position-relative">
+            <div class="position-absolute top-0 end-0 m-3 opacity-25 fw-bold display-6">1</div>
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-3 bg-light rounded-3 text-primary shadow-sm border border-primary-subtle">
+                    <i data-lucide="box" size="24"></i>
+                </div>
+            </div>
+            <h4 class="fw-bold">The Basics</h4>
+            <p class="text-muted small">Learn how we translate physical objects (like a heavy block and a spring) into numbers so a computer can understand them.</p>
+            <a href="/system/modeling" class="text-primary text-decoration-none fw-bold small">Learn the basics &rarr;</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="info-card h-100 mb-0 position-relative">
+            <div class="position-absolute top-0 end-0 m-3 opacity-25 fw-bold display-6">2</div>
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-3 bg-light rounded-3 text-success shadow-sm border border-success-subtle">
+                    <i data-lucide="cpu" size="24"></i>
+                </div>
+            </div>
+            <h4 class="fw-bold">The Brain (Control)</h4>
+            <p class="text-muted small">Learn how to teach a computer to drive the system perfectly. We'll explore PID (like driving a car) and State Space (like an engine dashboard).</p>
+            <a href="/control/pid" class="text-success text-decoration-none fw-bold small">Explore control theory &rarr;</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="info-card h-100 mb-0 position-relative">
+            <div class="position-absolute top-0 end-0 m-3 opacity-25 fw-bold display-6">3</div>
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-3 bg-light rounded-3 text-warning shadow-sm border border-warning-subtle">
+                    <i data-lucide="monitor-play" size="24"></i>
+                </div>
+            </div>
+            <h4 class="fw-bold">Virtual Prototyping</h4>
+            <p class="text-muted small">See how engineers use software like Simulink and Simscape to build virtual prototypes before building them in real life.</p>
+            <a href="/simulink/modeling" class="text-warning text-decoration-none fw-bold small">See the software &rarr;</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

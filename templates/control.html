@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Simulink: Adding the Brain</h1>
+    <p class="page-subtitle text-justify">On the last page, our virtual machine bounced around too much. Now, it's time to add the "PID Brain" block to our Lego set so it can control itself!</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Adding PID Card -->
+        <section id="PID" class="info-card">
+            <h2 class="card-title"><i data-lucide="cpu"></i> Adding the PID Block</h2>
+            <p class="text-justify">To fix the bouncing, we just drop a new Lego block into our Simulink model: the <strong>PID Controller Block</strong>. We put it right between the Push (the input) and the Machine.</p>
+            
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/Simulink(PIDB).png') }}" alt="Simulink PID" class="img-fluid img-fluid-custom rounded shadow-sm">
+            </div>
+
+            <div class="p-4 bg-light rounded border mb-4">
+                <h6 class="fw-bold d-flex align-items-center gap-2"><i data-lucide="refresh-cw" class="text-primary"></i> The Magic Loop (Feedback)</h6>
+                <p class="small text-muted mb-0">Notice the line going from the very end, back to the beginning? That's called a <strong>Feedback Loop</strong>. It's how the Brain looks at the screen to see where the piston is, realizes it made a mistake, and adjusts the air pressure for the next second. It’s exactly like driving a car and watching the road!</p>
+            </div>
+            
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/Simulink(PID).png') }}" alt="PID Scope" class="img-fluid img-fluid-custom border rounded shadow-sm">
+            </div>
+        </section>
+
+        <!-- State Space Section -->
+        <section id="state-space" class="info-card mt-4">
+            <h2 class="card-title"><i data-lucide="layers"></i> Upgrading to State Space</h2>
+            <p class="text-justify">Want to be even fancier? We can swap out the simple Machine block for a <strong>State-Space Block</strong> (the one that acts like an engine dashboard). This gives the computer even more control.</p>
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/Simulink(SSB).png') }}" alt="Simulink State Space" class="img-fluid img-fluid-custom rounded shadow-sm" style="max-width: 80%;">
+            </div>
+            
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/Simulink(SS).png') }}" alt="SS Scope" class="img-fluid img-fluid-custom border rounded shadow-sm">
+            </div>
+        </section>
+
+        <!-- Comparison Section -->
+        <section id="comparison" class="info-card">
+            <h2 class="card-title"><i data-lucide="split"></i> PID vs. State Space</h2>
+            <p class="text-justify">Let's put them in a race! The red line is the State Space (Dashboard), and the blue line is the PID (Speedometer).</p>
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/SSvsPID.png') }}" alt="Comparison" class="img-fluid img-fluid-custom rounded shadow-sm">
+            </div>
+            <p class="text-justify small text-muted"><strong>Analysis:</strong> Both Brains work! But notice how the State Space (red line) is slightly smoother. Because it looks at everything at once, it never guesses wrong.</p>
+        </section>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="info-card sticky-top" style="top: 2rem;">
+            <h2 class="card-title"><i data-lucide="clipboard-check"></i> New Report Card</h2>
+            <p class="small text-muted mb-4">Did the Brains help? Look at these numbers!</p>
+            
+            <h6 class="fw-bold text-primary mb-3">PID Brain:</h6>
+            <div class="list-group list-group-flush small mb-4">
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Overshoot</span>
+                    <span class="fw-bold text-success">0% (Perfect)</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Settling Time</span>
+                    <span class="fw-bold text-success">2.13 s</span>
+                </div>
+            </div>
+
+            <h6 class="fw-bold text-success mb-3">State-Space Brain:</h6>
+            <div class="list-group list-group-flush small">
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Overshoot</span>
+                    <span class="fw-bold text-success">0% (Perfect)</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Settling Time</span>
+                    <span class="fw-bold text-success">2.65 s</span>
+                </div>
+            </div>
+            
+            <div class="mt-4 p-3 bg-success-subtle border border-success-subtle rounded text-success small">
+                <i data-lucide="thumbs-up" size="14"></i>
+                <strong>Success!</strong> Both Brains stopped the bouncing completely.
+            </div>
+            
+            <div class="mt-4 pt-3 border-top">
+                <a href="/simulink/simscape" class="btn btn-primary-custom w-100 d-flex align-items-center justify-content-center gap-2">
+                    <span>Final Step: Simscape &rarr;</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Virtual Prototyping: Simulink</h1>
+    <p class="page-subtitle text-justify">Before engineers build expensive machines in the real world, they test them on a computer. Simulink is like playing with digital Lego blocks to build a virtual machine.</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Overview Card -->
+        <section class="info-card">
+            <h2 class="card-title"><i data-lucide="info"></i> What is Simulink?</h2>
+            <p class="text-justify">Simulink is a famous computer program used by engineers all over the world. Instead of writing pages of complicated math equations, Simulink lets you drag and drop "blocks" onto a screen and connect them with wires.</p>
+            
+            <div class="p-3 bg-primary-subtle border border-primary-subtle rounded text-primary small d-flex gap-2 my-4">
+                <i data-lucide="puzzle" size="24" class="flex-shrink-0"></i>
+                <span><strong>The Lego Analogy:</strong> Imagine you want to build a toy car. In Simulink, you grab a "Motor Block", connect it to a "Wheel Block", and attach a "Battery Block" to see if it runs. It’s that visual!</span>
+            </div>
+        </section>
+
+        <!-- Building Model Card -->
+        <section id="building-the-model" class="info-card">
+            <h2 class="card-title"><i data-lucide="hammer"></i> Building Our Pneumatic Lego Set</h2>
+            <p>To test our pneumatic piston, we just need three simple blocks connected together.</p>
+            
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/Simulink(modellingB).png') }}" alt="Block Diagram" class="img-fluid img-fluid-custom rounded shadow-sm">
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="p-3 border rounded text-center h-100">
+                        <i data-lucide="wind" class="text-primary mb-2"></i>
+                        <h6 class="fw-bold">1. The Push (Step Block)</h6>
+                        <p class="small text-muted mb-0">This acts like turning on the air compressor. It sends a burst of air pressure into the system.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded text-center h-100">
+                        <i data-lucide="box" class="text-success mb-2"></i>
+                        <h6 class="fw-bold">2. The Machine (Transfer Fcn)</h6>
+                        <p class="small text-muted mb-0">This holds the "recipe" we made on the Modeling page. It represents our Heavy Block, Sticky Floor, and Rubber Band.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded text-center h-100">
+                        <i data-lucide="monitor" class="text-warning mb-2"></i>
+                        <h6 class="fw-bold">3. The Screen (Scope Block)</h6>
+                        <p class="small text-muted mb-0">This is just a computer monitor block that draws a graph so we can see the piston moving.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-center small text-muted"><strong>Inside the Machine Block:</strong> We just type in our numbers for Mass, Friction, and the Spring, and the computer does the rest!</p>
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/Simulink(modellingc).png') }}" alt="Block Config" class="img-fluid img-fluid-custom rounded shadow-sm" style="max-width: 60%;">
+            </div>
+        </section>
+
+        <!-- Results Card -->
+        <section id="results" class="info-card">
+            <h2 class="card-title"><i data-lucide="bar-chart"></i> The Result (No Brain Yet)</h2>
+            <p>When we hit the "Play" button, the Scope Block shows us this graph. Because we haven't added a PID "Brain" yet, the piston just shoots out blindly when the air hits it.</p>
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/Simulink(modelling).png') }}" alt="Simulink Results" class="img-fluid img-fluid-custom border rounded shadow-sm">
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="info-card sticky-top" style="top: 2rem;">
+            <h2 class="card-title"><i data-lucide="clipboard-list"></i> Report Card</h2>
+            <p class="small text-muted">How did our "Brainless" system do?</p>
+            <div class="list-group list-group-flush small">
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Rise Time (How fast?)</span>
+                    <span class="fw-bold">0.93 s</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Settling Time (When does it stop wiggling?)</span>
+                    <span class="fw-bold">2.69 s</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Overshoot (Did it go too far?)</span>
+                    <span class="fw-bold text-warning">5.83 %</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Final Value</span>
+                    <span class="fw-bold">0.065 m</span>
+                </div>
+            </div>
+            
+            <div class="mt-4 p-3 bg-warning-subtle border border-warning-subtle rounded text-warning small">
+                <i data-lucide="alert-triangle" size="14"></i>
+                <strong>Conclusion:</strong> It works, but it bounces too much. It needs a controller!
+            </div>
+            
+            <div class="mt-4 pt-3 border-top">
+                <a href="/simulink/control" class="btn btn-primary-custom w-100 d-flex align-items-center justify-content-center gap-2">
+                    <span>Give it a Brain (Control) &rarr;</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

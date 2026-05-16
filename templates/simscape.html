@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Simscape: The Real World</h1>
+    <p class="page-subtitle text-justify">Simulink is like doing math on perfect paper. Simscape is like building a virtual prototype in a video game. It adds the "messiness" of the real world.</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Physical Modeling Card -->
+        <section id="Modeling" class="info-card">
+            <h2 class="card-title"><i data-lucide="monitor-play"></i> Virtual Prototyping</h2>
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/Simscape(Modeling).png') }}" alt="Simscape Diagram" class="img-fluid img-fluid-custom rounded shadow-sm">
+            </div>
+            
+            <p class="text-justify">In Simscape, we don't just use math blocks. We connect virtual physical objects. Instead of a "Transfer Function", we actually drop a virtual air valve and a virtual pneumatic cylinder onto the screen.</p>
+
+            <div class="row g-4 mt-2">
+                <div class="col-md-6">
+                    <div class="p-3 border rounded h-100 bg-light">
+                        <i data-lucide="cylinder" class="text-primary mb-2"></i>
+                        <h6 class="fw-bold">The Virtual Cylinder</h6>
+                        <p class="small text-muted mb-0">It acts just like real metal. It has weight, and the piston rubs against the walls (friction).</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 border rounded h-100 bg-light">
+                        <i data-lucide="git-merge" class="text-success mb-2"></i>
+                        <h6 class="fw-bold">The Virtual Valve</h6>
+                        <p class="small text-muted mb-0">It controls the air. It takes time to open and close, just like a real mechanical switch.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Components Detail Card -->
+        <section class="info-card">
+            <h2 class="card-title"><i data-lucide="settings"></i> Inside the Virtual Machine</h2>
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <img src="{{ url_for('static', filename='Images/Valve.png') }}" alt="Valve Layout" class="img-fluid rounded border shadow-sm">
+                </div>
+                <div class="col-md-7">
+                    <h6 class="fw-bold">The Air Director (Valve)</h6>
+                    <p class="small text-muted">This part acts like a traffic cop. It directs the high-pressure air (P) to push the piston one way, and lets the old air (T) escape out the back.</p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-5 order-md-2">
+                    <img src="{{ url_for('static', filename='Images/actuotor.png') }}" alt="Actuator" class="img-fluid rounded border shadow-sm">
+                </div>
+                <div class="col-md-7 order-md-1">
+                    <h6 class="fw-bold">The Muscle (Actuator)</h6>
+                    <p class="small text-muted">As air enters one side, it compresses (like a squishy spring) before it starts moving the heavy metal rod. This "squishiness" makes pneumatics very tricky to control in real life!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Card -->
+        <section id="Simulink-VS-Simscape" class="info-card">
+            <h2 class="card-title"><i data-lucide="compare"></i> Math vs. Reality</h2>
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/SimulinkvsSimscape.png') }}" alt="Result Comparison" class="img-fluid img-fluid-custom rounded shadow-sm">
+            </div>
+            <div class="row g-4 mt-2">
+                <div class="col-md-6">
+                    <div class="p-3 bg-primary-subtle rounded border border-primary-subtle">
+                        <h6 class="fw-bold text-primary"><i data-lucide="calculator" size="18"></i> Simulink (Perfect Math)</h6>
+                        <p class="small mb-0">The blue line. It assumes air pushes instantly and perfectly. It stops exactly on target with 0% bounce.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-warning-subtle rounded border border-warning-subtle">
+                        <h6 class="fw-bold text-warning"><i data-lucide="globe" size="18"></i> Simscape (Messy Reality)</h6>
+                        <p class="small mb-0">The red line. Because the air is squishy and the metal has momentum, it bounces past the target before stopping!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="info-card sticky-top" style="top: 2rem;">
+            <h2 class="card-title"><i data-lucide="activity"></i> The "Real" Results</h2>
+            <div class="text-center mb-3 mt-3">
+                <img src="{{ url_for('static', filename='Images/Simscape(PIDR).png') }}" alt="Simscape Graph" class="img-fluid rounded border shadow-sm">
+            </div>
+            
+            <p class="small text-muted mb-4">We used the exact same PID Brain as before, but this time on the virtual physical model.</p>
+            
+            <div class="list-group list-group-flush small">
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Rise Time</span>
+                    <span class="fw-bold">0.50 s</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Overshoot</span>
+                    <span class="fw-bold text-danger">29.05% <i data-lucide="alert-circle" size="14"></i></span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Settling Time</span>
+                    <span class="fw-bold">3.14 s</span>
+                </div>
+            </div>
+            
+            <div class="mt-4 p-3 bg-danger-subtle border border-danger-subtle rounded text-danger small d-flex gap-2">
+                <i data-lucide="alert-triangle" size="24" class="flex-shrink-0"></i>
+                <span><strong>Wow! 29% Overshoot!</strong> Why? Because real air compresses like a balloon. The PID Brain was tuned for perfect math, so it pushed too hard in the messy real world. We need to re-tune the Brain for reality!</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

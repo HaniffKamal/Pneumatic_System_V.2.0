@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">The Basics of Modeling</h1>
+    <p class="page-subtitle text-justify">Before a computer can control a physical machine, we have to translate that machine into numbers. This is called "Modeling". Think of it as writing a math recipe for reality.</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Physical Setup Card -->
+        <section id="physical_setup" class="info-card">
+            <h2 class="card-title"><i data-lucide="microscope"></i> The Physical World</h2>
+            
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/Pneumatic System.png') }}" alt="Pneumatic System" class="img-fluid img-fluid-custom" style="max-width: 80%;">
+            </div>
+
+            <p class="text-justify">Our pneumatic system pushes a metal rod (a piston) back and forth. To understand how it moves, we can imagine a simple real-world scenario: <strong>A heavy block attached to a rubber band, sliding on a sticky floor.</strong></p>
+            
+            <div class="row g-4 mt-2">
+                <div class="col-sm-6">
+                    <div class="p-3 border rounded edu-card h-100">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i data-lucide="weight" class="text-primary"></i>
+                            <strong class="mb-0">The Heavy Block = Mass (M)</strong>
+                        </div>
+                        <p class="small text-muted mb-0">Heavy things are hard to push and hard to stop once they start moving. This is inertia.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="p-3 border rounded edu-card h-100" style="border-left-color: #10b981; background-color: #ecfdf5;">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i data-lucide="waves" style="color: #10b981;"></i>
+                            <strong class="mb-0">The Sticky Floor = Damper (D)</strong>
+                        </div>
+                        <p class="small text-muted mb-0">Friction slows things down. Imagine trying to move your hand through a pool of honey. That resistance is damping.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="p-3 border rounded edu-card h-100" style="border-left-color: #8b5cf6; background-color: #f5f3ff;">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i data-lucide="activity" style="color: #8b5cf6;"></i>
+                            <strong class="mb-0">The Rubber Band = Spring (C)</strong>
+                        </div>
+                        <p class="small text-muted mb-0">A spring always wants to pull you back to the starting point. The further you stretch it, the harder it pulls back.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="p-3 border rounded edu-card h-100" style="border-left-color: #ef4444; background-color: #fef2f2;">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i data-lucide="wind" style="color: #ef4444;"></i>
+                            <strong class="mb-0">The Push = Air Force (F)</strong>
+                        </div>
+                        <p class="small text-muted mb-0">This is the compressed air pushing against the piston. Higher pressure means a harder push.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4 p-3 bg-light rounded text-center small text-muted border">
+                <strong>The Math Translation:</strong> If we add up the Push (F), subtract the Honey (D), and subtract the Rubber Band (C), we know exactly how fast the Heavy Block (M) will accelerate!
+            </div>
+        </section>
+
+        <!-- System Equations Card -->
+        <section id="system_equations" class="info-card">
+            <h2 class="card-title"><i data-lucide="binary"></i> The Magic Formula (Transfer Function)</h2>
+            <p class="text-justify">Engineers use something called a <strong>Transfer Function</strong>. It sounds scary, but it's just a black box. You put an input in (Air Pressure), and you get an output out (Movement).</p>
+            
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/FBD.png') }}" alt="Free Body Diagram" class="img-fluid img-fluid-custom" style="max-width: 60%;">
+            </div>
+
+            <p class="text-justify">Using some fancy math (called Laplace transforms), we turn our real-world block, spring, and honey into this recipe:</p>
+
+            <div class="math-block">
+                <p class="text-center text-muted small mb-2">Output (Movement) divided by Input (Pressure) equals our Recipe:</p>
+                <p class="text-center fw-bold text-primary mb-0 display-6">\[ T(s) = \frac{X(s)}{P(s)} = \frac{A}{Ms^2 + Ds + C}\]</p>
+            </div>
+            <p class="text-center small text-muted mt-3">Don't worry about the <em>s²</em> and <em>s</em>. Just know that the bottom part of the fraction holds our Mass (M), Sticky Floor (D), and Rubber Band (C).</p>
+        </section>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Parameters Sidebar Card -->
+        <div class="info-card sticky-top" style="top: 2rem;">
+            <h2 class="card-title"><i data-lucide="sliders"></i> The Baseline Numbers</h2>
+            <p class="small text-muted">When we test our virtual system, we use these numbers as our starting point.</p>
+            
+            <div class="list-group list-group-flush mt-3">
+                <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
+                    <span>Piston Area (A)</span>
+                    <span class="badge bg-primary rounded-pill">0.0314 mm²</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
+                    <span>Mass (M)</span>
+                    <span class="badge bg-secondary rounded-pill">20 kg</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
+                    <span>Damping (D)</span>
+                    <span class="badge bg-secondary rounded-pill">60 Ns/m</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
+                    <span>Spring Constant (C)</span>
+                    <span class="badge bg-secondary rounded-pill">100 N/m</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
+                    <span>Nominal Pressure (P)</span>
+                    <span class="badge bg-secondary rounded-pill">20684 Pa</span>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top">
+                <a href="/system/analysis" class="btn btn-primary-custom w-100 d-flex align-items-center justify-content-center gap-2">
+                    <span>Play with these numbers &rarr;</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Advanced Control: State Space</h1>
+    <p class="page-subtitle text-justify">PID control is great, but it has a blind spot. Welcome to "State Space"—a way to let the computer see everything happening inside the machine at once.</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Dashboard Analogy Card -->
+        <section id="dashboard_analogy" class="info-card">
+            <h2 class="card-title"><i data-lucide="gauge"></i> The "Dashboard" Analogy</h2>
+            <p class="text-justify">Think of <strong>PID Control</strong> like driving a car by <em>only</em> looking at the speedometer. You press the gas pedal (input) and watch your speed (output). It works, but you don't know if the engine is overheating or if you are in the wrong gear.</p>
+            
+            <p class="text-justify"><strong>State Space Control</strong> is like giving the computer access to the entire engine. Instead of just looking at the final speed, it looks at the "states" of the system: engine RPM, temperature, tire pressure, and speed—all at exactly the same time.</p>
+            
+            <div class="row g-4 my-4">
+                <div class="col-md-6">
+                    <div class="p-4 border rounded bg-light h-100 position-relative">
+                        <div class="position-absolute top-0 end-0 m-2 text-muted opacity-25"><i data-lucide="cpu" size="48"></i></div>
+                        <h5 class="fw-bold text-primary mb-3">PID (Classic)</h5>
+                        <ul class="text-muted small space-y-2 mb-0 ps-3">
+                            <li>Looks at 1 Input & 1 Output.</li>
+                            <li>Like driving by only looking at the speedometer.</li>
+                            <li>Simple, but can be tricked by complex machines.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-4 border rounded bg-light h-100 position-relative">
+                        <div class="position-absolute top-0 end-0 m-2 text-muted opacity-25"><i data-lucide="layers" size="48"></i></div>
+                        <h5 class="fw-bold text-success mb-3">State Space (Modern)</h5>
+                        <ul class="text-muted small space-y-2 mb-0 ps-3">
+                            <li>Looks at EVERYTHING at once.</li>
+                            <li>Like a master mechanic monitoring every engine part.</li>
+                            <li>Incredibly precise, no guessing required.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Don't Fear Matrices Card -->
+        <section id="matrices" class="info-card">
+            <h2 class="card-title"><i data-lucide="grid"></i> Don't Fear the Matrices</h2>
+            <p class="text-justify">Because State Space looks at so many things at once, writing down all the math equations gets messy. Engineers use <strong>Matrices</strong> (those big square brackets with numbers inside) simply as a neat filing cabinet to organize the math.</p>
+            
+            <div class="math-block my-4">
+                <p class="text-center text-muted small mb-2">The "Filing Cabinet" format looks like this:</p>
+                <p class="text-center">\[\dot{x}(t) = \mathbf{A}x(t) + \mathbf{B}u(t)\]</p>
+                <p class="text-center mb-0">\[y(t) = \mathbf{C}x(t) + \mathbf{D}u(t)\]</p>
+            </div>
+
+            <div class="p-3 bg-primary-subtle border border-primary-subtle rounded text-primary small">
+                <i data-lucide="info" size="16" class="me-1 mb-1"></i>
+                <strong>Translation:</strong> It just means "The change in the machine right now = (What the machine is currently doing) + (The new command we just gave it)."
+            </div>
+        </section>
+
+        <!-- Pole Placement Card -->
+        <section id="Control_Design_Using_Pole_Placement" class="info-card">
+            <h2 class="card-title"><i data-lucide="target"></i> Pole Placement (Target Practice)</h2>
+            <div class="text-center my-4">
+                <img src="{{ url_for('static', filename='Images/State(BD).png') }}" alt="Block Diagram" class="img-fluid img-fluid-custom rounded shadow-sm" style="max-width: 80%;">
+            </div>
+            <p class="text-justify">How do we tune this complex brain? We use a trick called <strong>Pole Placement</strong>. Imagine you have a dartboard, and you tell the computer exactly where you want the darts (the poles) to land to get the perfect movement. The computer then automatically calculates the exact mathematical settings (called the <strong>K matrix</strong>) to make it happen!</p>
+            
+            <div class="code-card mt-4">
+                <div class="code-header d-flex justify-content-between">
+                    <span>MATLAB Magic</span>
+                    <span class="badge bg-secondary">For Advanced Users</span>
+                </div>
+                <pre class="mb-0"><code>% We tell the computer we want a smooth, fast stop (no bouncing)
+desired_poles = [-2.5, -2.0];
+
+% The computer does the hard math for us!
+K = place(A, B, desired_poles);</code></pre>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Results Card -->
+        <div class="info-card sticky-top" style="top: 2rem;">
+            <h2 class="card-title"><i data-lucide="check-circle"></i> The Perfect Stop</h2>
+            <div class="text-center mb-4 mt-3">
+                <img src="{{ url_for('static', filename='Images/State.png') }}" alt="Response" class="img-fluid border rounded shadow-sm">
+            </div>
+            
+            <p class="small text-muted text-center mb-4">Because the computer knows everything about the system, it can stop the piston with <strong>mathematical perfection</strong>.</p>
+            
+            <div class="list-group list-group-flush small">
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Rise Time</span>
+                    <span class="fw-bold">1.51 s</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Overshoot</span>
+                    <span class="badge bg-success rounded-pill px-3">0% (Perfect!)</span>
+                </div>
+                <div class="list-group-item d-flex justify-content-between bg-transparent px-0 border-light-subtle">
+                    <span class="text-muted">Settling Time</span>
+                    <span class="fw-bold">2.64 s</span>
+                </div>
+            </div>
+            
+            <div class="mt-4 p-3 bg-success-subtle border border-success-subtle rounded text-success small d-flex gap-2">
+                <i data-lucide="award" size="24" class="flex-shrink-0"></i>
+                <span>Notice the <strong>0% overshoot</strong>. A PID controller often struggles to get exactly 0% without slowing down a lot. State Space nails it.</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
