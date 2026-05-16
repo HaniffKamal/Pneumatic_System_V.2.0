@@ -1,6 +1,3 @@
-<div align="center">
-  <img src="static/Images/logo ftkekk.jpg" width="120" alt="PneumaticLab Logo" style="border-radius: 12px; margin-bottom: 20px;">
-  
   <h1>PneumaticLab 🔬</h1>
   <p><em>Control Air. Master Machines.</em></p>
   <p>An interactive educational dashboard for simulating pneumatic physics and control theory.</p>
